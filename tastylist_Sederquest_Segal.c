@@ -22,8 +22,6 @@ void append(int num)
     right->next=NULL;
 }
  
- 
- 
 void add( int num )
 {
     struct node *temp;
@@ -40,6 +38,7 @@ void add( int num )
     head=temp;
     }
 }
+
 void addafter(int num, int loc)
 {
     int i;
@@ -57,8 +56,6 @@ void addafter(int num, int loc)
     left->next=right;
     return;
 }
- 
- 
  
 void insert(int num)
 {
@@ -86,38 +83,42 @@ void insert(int num)
     }
 }
  
- 
- 
-int delete(int num)
-{
+int delete(int num) {
+    struct node **indirect = &head;
+    while ((*indirect)->data != num) {
+        indirect = &(*indirect)->next;
+    }
+    
+    if (indirect == NULL)
+        return 0;
+
+    
+    return 1;
+}
+
+/*
+int delete(int num) {
     struct node *temp, *prev;
     temp=head;
-    while(temp!=NULL)
-    {
-    if(temp->data==num)
-    {
-        if(temp==head)
-        {
-        head=temp->next;
-        free(temp);
-        return 1;
+    while(temp!=NULL) {
+        if(temp->data==num) {
+            if(temp==head) {
+            head=temp->next;
+            free(temp);
+            return 1;
+            } else {
+            prev->next=temp->next;
+            free(temp);
+            return 1;
+            }
+        } else {
+            prev=temp;
+            temp= temp->next;
         }
-        else
-        {
-        prev->next=temp->next;
-        free(temp);
-        return 1;
-        }
-    }
-    else
-    {
-        prev=temp;
-        temp= temp->next;
-    }
     }
     return 0;
 }
- 
+*/
  
 void  display(struct node *r)
 {
@@ -127,7 +128,7 @@ void  display(struct node *r)
     return;
     }
     while(r!=NULL)
-    {
+   {
     printf("%d ",r->data);
     r=r->next;
     }
