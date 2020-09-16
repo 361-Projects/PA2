@@ -86,7 +86,7 @@ void insert(int num)
 int delete(int num) {
     struct node **indirect = &head;
 
-    while (indirect != NULL || (*indirect)->data != num) {
+    while (&(*indirect) != NULL || (*indirect)->data != num) {
         indirect = &(*indirect)->next;
     }
     
