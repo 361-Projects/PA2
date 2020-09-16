@@ -85,12 +85,23 @@ void insert(int num)
  
 int delete(int num) {
     struct node **indirect = &head;
+
     while ((*indirect)->data != num) {
         indirect = &(*indirect)->next;
     }
     
-    if (indirect == NULL)
+    if (*indirect == NULL)
         return 0;
+    // Not too tasty but gotta reassign head somehow
+    else if (head->data == num) {
+        struct node *tmp = head;
+        head = (*indirect)->next;
+        free(tmp);
+    } else {
+        struct node *tmp = *indirect;
+        *indirect = (*indirect)->next;
+        free(tmp);
+    }
 
     
     return 1;
