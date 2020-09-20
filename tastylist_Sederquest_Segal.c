@@ -87,9 +87,9 @@ int delete(int num) {
     struct node **indirect = &head;
 
     while ((*indirect)->data != num) {
-        if (indirect == NULL)
-            return 0;
         indirect = &(*indirect)->next;
+        if (*indirect == NULL)
+           return 0;
     }
     // Not too tasty but gotta reassign head somehow
     if (head->data == num) {
@@ -102,34 +102,9 @@ int delete(int num) {
         free(tmp);
     }
 
-    
     return 1;
 }
 
-/*
-int delete(int num) {
-    struct node *temp, *prev;
-    temp=head;
-    while(temp!=NULL) {
-        if(temp->data==num) {
-            if(temp==head) {
-            head=temp->next;
-            free(temp);
-            return 1;
-            } else {
-            prev->next=temp->next;
-            free(temp);
-            return 1;
-            }
-        } else {
-            prev=temp;
-            temp= temp->next;
-        }
-    }
-    return 0;
-}
-*/
- 
 void  display(struct node *r)
 {
     r=head;
@@ -158,7 +133,15 @@ int count()
     }
     return c;
 }
- 
+
+void freeList() {
+    struct node *tmp = head;
+    while (head != NULL) {
+        head = head->next;
+        free(tmp);
+        tmp = head;
+    }
+}
  
 int  main()
 {
@@ -208,7 +191,8 @@ int  main()
                     printf("%d not found in the list\n",num);
                 }
                 break;
-        case 5:     return 0;
+        case 5:     freeList();
+                return 0;
         default:    printf("Invalid option\n");
         }
     }
